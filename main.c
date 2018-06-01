@@ -128,6 +128,24 @@ void	put_sh(t_sh *table)
 	}
 }
 
+void	free_sh_table(t_sh *table, int index)
+{
+	int			i;
+	t_table		*temp;
+
+	i = 0;
+	if (table[i] != NULL)
+	{
+		if((table[i].sh_ta)->next)
+		{
+			temp = table[i].sh_ta;
+			table[i].sh_ta = table[i].sh_ta->next;
+			free(temp);
+		}
+
+	}
+}
+
 int		main(int ac, char **av, char **env)
 {
 	t_sh	table[100];

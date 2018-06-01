@@ -68,12 +68,32 @@ void	signal_quith(int sign)
 		kill(SIGQUIT, 0);
 }
 
+void	ft_freestrstr(char **str)
+{
+	char	*temp;
+	char	**cp;
+
+	if (str)
+	{
+	cp = str;
+	while (*str)
+	{
+		temp = *str;
+		str++;
+		free(temp);
+		}
+		free(cp);
+		}
+}
+
 void	shell(int ac, char **av, char **env, t_sh *table)
 {
 	char	*line;
 //	char	**paras;
 	//	char	*path;
 	char	**cmd;
+	char	*temp;
+	char	**cp;
 //	pid_t	pid_no;
 
 	(void)ac;
@@ -89,13 +109,18 @@ void	shell(int ac, char **av, char **env, t_sh *table)
 		if (get_next_line(1, &line) > 0)
 		{
 		cmd = ft_strsplit(line, ';');
+		cp = cmd;
 		while (*cmd)
 		{
 			//each_cmdline(*cmd, env, table);
 		//	ft_printf("in shell cmd=%s\n",*cmd);
 			pipes(*cmd, no_pipe(*cmd), &env, table);
+			temp = *cmd;
 			cmd++;
+			free(temp);
 		}
+		free(cp);
+		free(line);
 		}
 	}
 }
@@ -158,6 +183,7 @@ void	update_shlvl(char ***env)
 	shlvl[2] = lv;
 	shlvl[3] = NULL;
 	set_env(shlvl, env);
+	free(lv);
 }
 
 void	update_lastapp(char *lastcmd, char ***env)

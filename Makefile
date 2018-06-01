@@ -30,7 +30,7 @@ OBJ = $(SRC:.c=.o)
 #LIB = $(addprefix $(INC_PATH)/,$(LIB_PATH))
 LIBFT = $(addprefix $(LIB_PATH)/,$(LIB_NAME))
 PRINTF = $(addprefix $(LIB_PATH)/,$(PRINTF_NAME))
-CPPFLAGS = -Wall -Werror -Wextra -I.
+CPPFLAGS = -Wall -Werror -Wextra -I. -g3
 
 # Defining colors
 

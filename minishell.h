@@ -35,6 +35,8 @@ typedef struct s_vari
 	int		num_pipe;
 	int		pipe_fd[2];
 	int		ct;
+//	char	*temp;
+//	char	**cp;
 	pid_t	pid;
 }			t_vari;
 
@@ -52,6 +54,7 @@ void		child_pro(char **paras, char **env, t_sh *table);
 void		each_cmdline(char *cmdline, char **env, t_sh *table);
 void		pipes(char *cmdline, int nb_pipe, char ***env, t_sh *table);
 int			no_pipe(char *cmdline);
+void		ft_freestrstr(char **str);
 void		signal_quith(int sign);
 void		put_strstr(char **str);
 void		set_env(char **paras, char ***env);

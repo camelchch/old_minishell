@@ -168,10 +168,13 @@ void	pipes(char	*cmdline, int nb_pipe, char ***env, t_sh *table)
 	init_saver(nb_pipe, &saver);
 	while (++saver.ct <= nb_pipe)
 	{
+		
 		papra = ft_split(cmds[saver.ct], " \t");
 		if (saver.ct == nb_pipe && *papra && is_buildin(*papra))
 			first_is_buildin(saver.in, papra, env, table);
 		else
 			parent_child(&saver, papra, env, table);
+		ft_freestrstr(papra);
 	}
+	ft_freestrstr(cmds);
 }
