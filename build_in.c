@@ -69,19 +69,18 @@ void	add_env(char ***env, char **paras)
 
 char	**delet_env(char **env, int index)
 {
-	//	char	*temp;
 	int		after;
 	char	**temp;
-
 	//put_env(*env);
 	temp = env;
+	free(temp[index]);
 	while (index < nb_str(env) - 1)
 	{
-		//	temp = *cp;
 		after = index + 1;
 		temp[index++] = temp[after];
 		//		free(temp);
 	}
+	free(temp[nb_str(env) - 2]);
 	temp[nb_str(env) - 2] = NULL;
 	free(temp[nb_str(env) - 1]);
 	temp[nb_str(env) - 1] = NULL;
