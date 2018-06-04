@@ -126,6 +126,7 @@ void	first_is_buildin(int in, char **papra, char ***env, t_sh *table)
 		close(in);
 	}
 	do_build(papra, env, table);
+	ft_freestrstr(papra);
 }
 
 void	init_saver(int nb_pipe, t_vari *saver)
@@ -154,8 +155,10 @@ void	parent_child(t_vari *saver, char **papra, char ***env, t_sh *table)
 	{
 		waitpid(saver->pid, NULL, 0);
 		saver->in = saver->pipe_fd[0];
-		//close(saver->pipe_fd[1]);
+	if (saver->num_pipe)
+		close(saver->pipe_fd[1]);
 	}
+	ft_freestrstr(papra);
 }
 
 void	pipes(char	*cmdline, int nb_pipe, char ***env, t_sh *table)
@@ -174,7 +177,7 @@ void	pipes(char	*cmdline, int nb_pipe, char ***env, t_sh *table)
 			first_is_buildin(saver.in, papra, env, table);
 		else
 			parent_child(&saver, papra, env, table);
-		ft_freestrstr(papra);
+		//ft_freestrstr(papra);
 	}
 	ft_freestrstr(cmds);
 }

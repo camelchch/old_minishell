@@ -6,7 +6,7 @@
 /*   By: saxiao <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/31 15:43:03 by saxiao            #+#    #+#             */
-/*   Updated: 2018/04/25 15:15:26 by saxiao           ###   ########.fr       */
+/*   Updated: 2018/06/01 17:03:55 by saxiao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,13 @@
 
 char	*ft_getenv(char **env, char *nm)
 {
+	//char	*temp;
+	//char	*cp;
+
 	while (env && *env)
 	{
-		if (!ft_strncmp(*env, ft_strjoin(nm, "="), ft_strlen(nm) + 1))
+		if (ft_strlen(*env) > ft_strlen(nm) && (*env)[ft_strlen(nm)] == '=' &&\
+				!ft_strncmp(*env, nm, ft_strlen(nm)))
 			return (*env + ft_strlen(nm) + 1);
 		env++;
 	}
@@ -88,6 +92,7 @@ void	init_shtable(t_sh *table, char **path)
 			addin_table(table, add, index);
 		}
 		}
+		closedir(dirp);
 		path++;
 	}
 }

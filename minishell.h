@@ -6,7 +6,7 @@
 /*   By: saxiao <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/31 12:26:55 by saxiao            #+#    #+#             */
-/*   Updated: 2018/04/27 16:51:55 by saxiao           ###   ########.fr       */
+/*   Updated: 2018/06/04 11:57:19 by saxiao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
+#define BUF_MAX 2048
 typedef struct s_table
 {
 	char			name[NAME_MAX + 1];
@@ -54,6 +55,7 @@ void		child_pro(char **paras, char **env, t_sh *table);
 void		each_cmdline(char *cmdline, char **env, t_sh *table);
 void		pipes(char *cmdline, int nb_pipe, char ***env, t_sh *table);
 int			no_pipe(char *cmdline);
+int			nb_str(char **str);
 void		ft_freestrstr(char **str);
 void		signal_quith(int sign);
 void		put_strstr(char **str);

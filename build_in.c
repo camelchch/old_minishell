@@ -47,30 +47,29 @@ void	add_env(char ***env, char **paras)
 	int		ct;
 	int		i;
 	char	*temp;
+	char	**for_free;
 
 	i = 0;
 	ct = nb_str(*env) + 2;
 
 	cp = *env;
+	for_free = *env;
 	*env = malloc(sizeof(char *) * ct);
 	while (i < ct - 2)
-	{
-	//	temp = *cp;
 		(*env)[i++] = ft_strdup(*cp++);
-//		free(temp);
-	}
+		//(*env)[i++] = (*cp++);
 	(*env)[i] = ft_strjoin(*paras, "=");
 	paras++;
 	temp = (*env)[i];
 	(*env)[i] = ft_strjoin((*env)[i], *paras);
 	free(temp);
 	(*env)[++i] = NULL;
-//	free(cp);
+	ft_freestrstr(for_free);
 }
 
 char	**delet_env(char **env, int index)
 {
-//	char	*temp;
+	//	char	*temp;
 	int		after;
 	char	**temp;
 
@@ -78,14 +77,16 @@ char	**delet_env(char **env, int index)
 	temp = env;
 	while (index < nb_str(env) - 1)
 	{
-	//	temp = *cp;
+		//	temp = *cp;
 		after = index + 1;
 		temp[index++] = temp[after];
-//		free(temp);
+		//		free(temp);
 	}
+	temp[nb_str(env) - 2] = NULL;
+	free(temp[nb_str(env) - 1]);
 	temp[nb_str(env) - 1] = NULL;
 	return (temp);
-//	free(cp);
+	//	free(cp);
 }
 
 void	set_env(char **paras, char ***env)
@@ -99,7 +100,9 @@ void	set_env(char **paras, char ***env)
 		cp++;
 	if (*cp)
 	{
+		temp = *cp;
 		*cp = ft_strjoin(*paras++, "=");
+		free(temp);
 		temp = *cp;
 		*cp = ft_strjoin(*cp, *paras);
 		free(temp);
@@ -110,45 +113,55 @@ void	set_env(char **paras, char ***env)
 
 void	init_tempwd(char **tempwd, int ct, char ***paras, char *path)
 {
+	//char	*temp;
+	(void)ct;
+	(void)paras;
+
 	tempwd[0] = "no real meaning here";
 	tempwd[1] = "OLDPWD";
 	tempwd[2] = getcwd(path, PATH_MAX + 1);
 	tempwd[3] = NULL;
-	if (ct == 2)
-	(*paras)++;
+	/*	if (ct == 2)
+		{
+		temp = **paras;
+		(*paras)++;
+		free(temp);
+		}
+		*/
 }
 
-void		oldpwd_home(char **paras, char ***env, int ct)
+void		oldpwd_home(char **cp, char ***env, int ct)
 {
-	if (ct == 1 || !ft_strcmp(*paras, "~"))
+	(void)ct;
+	if (ct == 1 || ft_strcmp(*cp, "~"))
 	{
-		*paras = ft_getenv(*env, "HOME");
-		if (!*paras)
-		ft_printf("enviroment HOME is not set\n");
-		}
+		*cp = ft_getenv(*env, "HOME");
+		if (!*cp)
+			ft_printf("enviroment HOME is not set\n");
+	}
 	else
 	{
-		*paras = ft_getenv(*env, "OLDPWD");
-		if (!*paras)
-		ft_printf("enviroment OLDPWD  is not set\n");
-		}
+		*cp = ft_getenv(*env, "OLDPWD");
+		if (!*cp)
+			ft_printf("enviroment OLDPWD  is not set\n");
+	}
 }
 
-void	for_cd(char **paras, char ***env, char **tempwd, char *path)
+void	for_cd(char *paras, char ***env, char **tempwd, char *path)
 {
-	if (!chdir(*paras))
+	if (!chdir(paras))
 	{
 		set_env(tempwd, env);
-	tempwd[1] = "PWD";
-	tempwd[2] = getcwd(path, PATH_MAX);
+		tempwd[1] = "PWD";
+		tempwd[2] = getcwd(path, PATH_MAX);
 		set_env(tempwd, env);
 	}
 	else
 	{
-		if (access(*paras, F_OK))
-		ft_printf("no such file or directory: %s\n", *paras);
-		else if (access(*paras, X_OK))
-		ft_printf("permission denied\n");
+		if (access(paras, F_OK))
+			ft_printf("no such file or directory: %s\n", *paras);
+		else if (access(paras, X_OK))
+			ft_printf("permission denied\n");
 	}
 }
 
@@ -157,28 +170,32 @@ int		cd(char **paras, char ***env)
 	int		ct;
 	char	*tempwd[4];
 	char	path[PATH_MAX + 1];
+	char	*cp;
 
 	ct = nb_str(paras);
+	if (ct == 1)
+		cp = paras[0];
+	else
+		cp = paras[1];
 	if (ct != 1 && ct != 2)
+	{
 		ft_printf("Too many arguments--usage : cd path\n");
+		return (1);
+	}
 	else
 	{
 		init_tempwd(tempwd, ct, &paras, path);
-	if (ct == 1 || !ft_strcmp(*paras, "~") || !ft_strcmp(*paras, "-"))
-	{
-			oldpwd_home(paras, env, ct);
-			if (!*paras)
-				return (1);
-		}
-	for_cd(paras, env, tempwd, path);
-}
-	return (1);
+		if (ct == 1 || (ct == 2 && (!ft_strcmp(*(paras + 1), "~") || !ft_strcmp(*(paras + 1), "-"))))
+			oldpwd_home(&cp, env, ct);
+		for_cd(cp, env, tempwd, path);
+		return (0);
+	}
 }
 
 char	**unset_env(char **paras, char **env)
 {
 	char	**cp;
-//	char	*temp;
+	//	char	*temp;
 	int		index;
 
 	cp = env;
@@ -188,7 +205,7 @@ char	**unset_env(char **paras, char **env)
 	{
 		cp++;
 		index++;
-		}
+	}
 	if (*cp)
 		env = delet_env(env,  index);
 	else
@@ -207,16 +224,17 @@ void	do_build(char **paras, char ***env, t_sh *table)
 	//	pwd();
 	else if (!ft_strcmp(*paras, "setenv") || !ft_strcmp(*paras, "unsetenv"))
 	{
-	if (!ft_strcmp(*paras, "unsetenv"))
-		*env = unset_env(paras, *env);
-	else
-		set_env(paras, env);
-	if (!ft_strcmp(*++paras, "PATH"))
-		init_shtable(table, path(*env));
+		if (!ft_strcmp(*paras, "unsetenv"))
+			*env = unset_env(paras, *env);
+		else
+			set_env(paras, env);
+		if (!ft_strcmp((*paras + 1), "PATH"))
+			init_shtable(table, path(*env));
 	}
 	else if (!ft_strcmp(*paras, "env"))
 		put_env(*env, paras, table);
 	else if (!ft_strcmp(*paras, "exit"))
 		ft_exit();
+	//	ft_freestrstr(paras);
 }
 

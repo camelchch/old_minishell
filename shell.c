@@ -65,7 +65,7 @@ void	signal_inh(int sign)
 void	signal_quith(int sign)
 {
 	(void)sign;
-		kill(SIGQUIT, 0);
+	kill(SIGQUIT, 0);
 }
 
 void	ft_freestrstr(char **str)
@@ -75,52 +75,52 @@ void	ft_freestrstr(char **str)
 
 	if (str)
 	{
-	cp = str;
-	while (*str)
-	{
-		temp = *str;
-		str++;
-		free(temp);
+		cp = str;
+		while (*str)
+		{
+			temp = *str;
+			str++;
+			free(temp);
 		}
 		free(cp);
-		}
+	}
 }
 
 void	shell(int ac, char **av, char **env, t_sh *table)
 {
 	char	*line;
-//	char	**paras;
+	//	char	**paras;
 	//	char	*path;
 	char	**cmd;
 	char	*temp;
 	char	**cp;
-//	pid_t	pid_no;
+	//	pid_t	pid_no;
 
 	(void)ac;
 	(void)av;
 
 	line = NULL;
 	signal(SIGINT, signal_inh);
-//	signal(SIGQUIT, signal_quith);
+	//	signal(SIGQUIT, signal_quith);
 	while(1)
 	{
 		ft_printf("$> ");
 		//		get_autoline(table);
 		if (get_next_line(1, &line) > 0)
 		{
-		cmd = ft_strsplit(line, ';');
-		cp = cmd;
-		while (*cmd)
-		{
-			//each_cmdline(*cmd, env, table);
-		//	ft_printf("in shell cmd=%s\n",*cmd);
-			pipes(*cmd, no_pipe(*cmd), &env, table);
-			temp = *cmd;
-			cmd++;
-			free(temp);
-		}
-		free(cp);
-		free(line);
+			cmd = ft_strsplit(line, ';');
+			cp = cmd;
+			while (*cmd)
+			{
+				//each_cmdline(*cmd, env, table);
+				//	ft_printf("in shell cmd=%s\n",*cmd);
+				pipes(*cmd, no_pipe(*cmd), &env, table);
+				temp = *cmd;
+				cmd++;
+				free(temp);
+			}
+			free(cp);
+			free(line);
 		}
 	}
 }
@@ -174,7 +174,7 @@ void	update_shlvl(char ***env)
 	cp = *env;
 	level = 1;
 	while (*cp && !(!ft_strncmp(*cp, "SHLVL", 5)))
-			cp++;
+		cp++;
 	if (*cp)
 		level = ft_atoi(*cp + 6) + 1;
 	lv = ft_itoa(level);
