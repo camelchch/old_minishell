@@ -64,7 +64,7 @@ void	add_env(char ***env, char **paras)
 	(*env)[i] = ft_strjoin((*env)[i], *paras);
 	free(temp);
 	(*env)[++i] = NULL;
-	ft_freestrstr(for_free);
+	//ft_freestrstr(for_free);
 }
 
 char	**delet_env(char **env, int index)
@@ -80,7 +80,7 @@ char	**delet_env(char **env, int index)
 		temp[index++] = temp[after];
 		//		free(temp);
 	}
-	free(temp[nb_str(env) - 2]);
+	//free(temp[nb_str(env) - 2]);
 	temp[nb_str(env) - 2] = NULL;
 	free(temp[nb_str(env) - 1]);
 	temp[nb_str(env) - 1] = NULL;
