@@ -14,11 +14,8 @@
 #include <stdlib.h>
 #include "minishell.h"
 
-char	*ft_getenv(char **env, char *nm)
+char		*ft_getenv(char **env, char *nm)
 {
-	//char	*temp;
-	//char	*cp;
-
 	while (env && *env)
 	{
 		if (ft_strlen(*env) > ft_strlen(nm) && (*env)[ft_strlen(nm)] == '=' &&\
@@ -29,7 +26,7 @@ char	*ft_getenv(char **env, char *nm)
 	return (NULL);
 }
 
-char	**path(char **env)
+char		**path(char **env)
 {
 	while (env && *env)
 	{
@@ -40,7 +37,7 @@ char	**path(char **env)
 	return (NULL);
 }
 
-int		calcu_index(char *name)
+int			calcu_index(char *name)
 {
 	int		cal;
 	int		i;
@@ -53,7 +50,7 @@ int		calcu_index(char *name)
 	return (cal);
 }
 
-void	addin_table(t_sh *table, t_table *add, int index)
+static void	addin_table(t_sh *table, t_table *add, int index)
 {
 		t_table		*cp;
 
