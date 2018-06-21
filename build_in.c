@@ -53,7 +53,7 @@ void		do_build(char **paras, char ***env, t_sh *table)
 			*env = unset_env(paras, *env);
 		else
 			set_env(paras, env);
-		if (!ft_strcmp((*paras + 1), "PATH"))
+		if (!ft_strcmp(*(paras + 1), "PATH"))
 			init_shtable(table, path(*env));
 	}
 	else if (!ft_strcmp(*paras, "env"))
