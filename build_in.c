@@ -6,7 +6,7 @@
 /*   By: saxiao <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/22 11:42:16 by saxiao            #+#    #+#             */
-/*   Updated: 2018/06/22 11:43:35 by saxiao           ###   ########.fr       */
+/*   Updated: 2018/06/22 15:30:22 by saxiao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void		do_build(char **paras, char ***env, t_sh *table)
 			*env = unset_env(paras, *env);
 		else
 			set_env(paras, env);
-		if (!ft_strcmp(*(paras + 1), "PATH"))
+		if (*(paras + 1) && !ft_strcmp(*(paras + 1), "PATH"))
 			init_shtable(table, path(*env));
 	}
 	else if (!ft_strcmp(*paras, "env"))

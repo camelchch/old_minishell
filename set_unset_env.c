@@ -6,7 +6,7 @@
 /*   By: saxiao <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/22 11:54:30 by saxiao            #+#    #+#             */
-/*   Updated: 2018/06/22 11:55:01 by saxiao           ###   ########.fr       */
+/*   Updated: 2018/06/22 15:48:34 by saxiao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,16 @@ static char	**delet_env(char **env, int index)
 	return (temp);
 }
 
-void		set_env(char **paras, char ***env)
+int		set_env(char **paras, char ***env)
 {
 	char	**cp;
 	char	*temp;
 
 	cp = *env;
 	paras++;
-	while (*cp && !(!ft_strncmp(*paras, *cp, ft_strlen(*paras)) && \
+	if (!*paras || !*(paras + 1))
+		return (0);
+	while (*cp && *paras && !(!ft_strncmp(*paras, *cp, ft_strlen(*paras)) && \
 	ft_strlen(*paras) < ft_strlen(*cp) && (*cp)[ft_strlen(*paras)] == '='))
 		cp++;
 	if (*cp)
@@ -74,6 +76,7 @@ void		set_env(char **paras, char ***env)
 	}
 	else
 		add_env(env, paras);
+		return (0);
 }
 
 char		**unset_env(char **paras, char **env)
@@ -84,6 +87,8 @@ char		**unset_env(char **paras, char **env)
 	cp = env;
 	index = 0;
 	paras++;
+	if (!*paras)
+		return (env);
 	while (*cp && !(!ft_strncmp(*paras, *cp, ft_strlen(*paras)) && \
 	ft_strlen(*paras) < ft_strlen(*cp) && (*cp)[ft_strlen(*paras)] == '='))
 	{

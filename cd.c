@@ -6,7 +6,7 @@
 /*   By: saxiao <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/22 11:46:18 by saxiao            #+#    #+#             */
-/*   Updated: 2018/06/22 11:48:55 by saxiao           ###   ########.fr       */
+/*   Updated: 2018/06/22 17:10:34 by saxiao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,31 @@ static void	init_tempwd(char **tempwd, char *path)
 	tempwd[3] = NULL;
 }
 
-static void	oldpwd_home(char **cp, char ***env, int ct)
+static void	oldpwd_home(char *cp, char ***env, int ct)
 {
-	(void)ct;
-	if (ct == 1 || !ft_strcmp(*cp, "~"))
+	char	*temp;
+
+	if (ct == 1 || ft_strstr(cp, "~"))
 	{
-		*cp = ft_getenv(*env, "HOME");
-		if (!*cp)
+		temp = ft_getenv(*env, "HOME");
+		if (!temp)
+		{
 			ft_printf("enviroment HOME is not set\n");
+			ft_bzero(cp, PATH_MAX + 1);
+		}
+		else
+			ct == 1 ? ft_strcpy(cp, temp) : replace_home(cp, temp);
 	}
 	else
 	{
-		*cp = ft_getenv(*env, "OLDPWD");
-		if (!*cp)
+		temp = ft_getenv(*env, "OLDPWD");
+		if (!temp)
+		{
 			ft_printf("enviroment OLDPWD  is not set\n");
+			ft_bzero(cp, PATH_MAX + 1);
+		}
+		else
+			ft_strcpy(cp, temp);
 	}
 }
 
@@ -51,7 +62,7 @@ static void	for_cd(char *paras, char ***env, char **tempwd, char *path)
 	else
 	{
 		if (access(paras, F_OK))
-			ft_printf("no such file or directory: %s\n", *paras);
+			ft_printf("no such file or directory: %s\n", paras);
 		else if (access(paras, X_OK))
 			ft_printf("permission denied\n");
 	}
@@ -62,13 +73,12 @@ int			cd(char **paras, char ***env)
 	int		ct;
 	char	*tempwd[4];
 	char	path[PATH_MAX + 1];
-	char	*cp;
+	char	cp[PATH_MAX + 1];
 
 	ct = nb_str(paras);
-	if (ct == 1)
-		cp = paras[0];
-	else
-		cp = paras[1];
+	ft_bzero(cp, PATH_MAX + 1);
+	if (ct == 2)
+		ft_strcpy(cp, paras[1]);
 	if (ct != 1 && ct != 2)
 	{
 		ft_printf("Too many arguments--usage : cd path\n");
@@ -77,10 +87,10 @@ int			cd(char **paras, char ***env)
 	else
 	{
 		init_tempwd(tempwd, path);
-		if (ct == 1 || (ct == 2 && (!ft_strcmp(*(paras + 1), "~") || \
+		if (ct == 1 || (ct == 2 && (ft_strstr(*(paras + 1), "~") || \
 						!ft_strcmp(*(paras + 1), "-"))))
-			oldpwd_home(&cp, env, ct);
-		if (cp)
+			oldpwd_home(cp, env, ct);
+		if (ft_strlen(cp))
 			for_cd(cp, env, tempwd, path);
 		return (0);
 	}

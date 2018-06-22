@@ -6,7 +6,7 @@
 /*   By: saxiao <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/31 12:26:55 by saxiao            #+#    #+#             */
-/*   Updated: 2018/06/22 12:08:37 by saxiao           ###   ########.fr       */
+/*   Updated: 2018/06/22 16:59:07 by saxiao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char				*path_in_sh(char *app, t_sh *table);
 int					calcu_index(char *name);
 int					is_buildin(char *app);
 int					cd(char **paras, char ***env);
+void				replace_home(char *cp, char *home);
 char				**unset_env(char **paras, char **env);
 void				do_build(char **paras, char ***env, t_sh *table);
 void				put_env(char **env, char **paras, t_sh *table);
@@ -57,7 +58,7 @@ int					no_pipe(char *cmdline);
 int					nb_str(char **str);
 void				ft_freestrstr(char **str);
 void				put_strstr(char **str);
-void				set_env(char **paras, char ***env);
+int					set_env(char **paras, char ***env);
 void				update_shlvl(char ***env);
 void				update_lastapp(char *lastcmd, char ***env);
 #endif
