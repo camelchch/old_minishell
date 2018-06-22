@@ -1,14 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   put_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saxiao <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/31 12:19:33 by saxiao            #+#    #+#             */
-/*   Updated: 2018/06/04 17:03:27 by saxiao           ###   ########.fr       */
+/*   Created: 2018/06/22 11:51:08 by saxiao            #+#    #+#             */
+/*   Updated: 2018/06/22 11:52:48 by saxiao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,7 +25,8 @@ static void		unset_sub_env(char **paras, char **env, char **new_env)
 	cp = env;
 	index = 0;
 	paras++;
-	while (*cp && !(!ft_strncmp(*paras, *cp, ft_strlen(*paras)) && ft_strlen(*paras) < ft_strlen(*cp) && (*cp)[ft_strlen(*paras)] == '='))
+	while (*cp && !(!ft_strncmp(*paras, *cp, ft_strlen(*paras)) && \
+		ft_strlen(*paras) < ft_strlen(*cp) && (*cp)[ft_strlen(*paras)] == '='))
 		new_env[index++] = *cp++;
 	new_env[index] = NULL;
 	if (*cp)
@@ -38,7 +40,7 @@ static void		unset_sub_env(char **paras, char **env, char **new_env)
 		ft_printf("no such variable %s\n", *paras);
 }
 
-static void	env_i(char **paras, char **new_env, char ***env, t_sh *table)
+static void		env_i(char **paras, char **new_env, char ***env, t_sh *table)
 {
 	char	**cp;
 	int		i;
@@ -64,7 +66,7 @@ static void	env_i(char **paras, char **new_env, char ***env, t_sh *table)
 		ft_printf("Usage: env [-u name] [-i] [name=value ...] [utlity]\n");
 }
 
-void		put_env(char **env, char **paras, t_sh *table)
+void			put_env(char **env, char **paras, t_sh *table)
 {
 	char	**new_env;
 	int		i;
@@ -77,7 +79,7 @@ void		put_env(char **env, char **paras, t_sh *table)
 	if (!*paras)
 		put_strstr(env);
 	else if (*paras && **paras == '-')
-		env_i(paras, new_env, &env , table);
+		env_i(paras, new_env, &env, table);
 	else
 		pipes(*paras, no_pipe(*paras), &env, table);
 	free(new_env);

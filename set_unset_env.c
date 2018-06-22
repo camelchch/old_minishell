@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   set_unset_env.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saxiao <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/22 11:54:30 by saxiao            #+#    #+#             */
+/*   Updated: 2018/06/22 11:55:01 by saxiao           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include <unistd.h>
 #include <stdlib.h>
@@ -12,7 +24,6 @@ static void	add_env(char ***env, char **paras)
 
 	i = 0;
 	ct = nb_str(*env) + 2;
-
 	cp = *env;
 	for_free = *env;
 	*env = malloc(sizeof(char *) * ct);
@@ -80,7 +91,7 @@ char		**unset_env(char **paras, char **env)
 		index++;
 	}
 	if (*cp)
-		env = delet_env(env,  index);
+		env = delet_env(env, index);
 	else
 		ft_printf("no such variable %s\n", *paras);
 	return (env);

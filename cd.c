@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saxiao <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/22 11:46:18 by saxiao            #+#    #+#             */
+/*   Updated: 2018/06/22 11:48:55 by saxiao           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include <unistd.h>
 #include <stdlib.h>
@@ -53,7 +65,10 @@ int			cd(char **paras, char ***env)
 	char	*cp;
 
 	ct = nb_str(paras);
-	(ct == 1) ? (cp = paras[0]) : (cp = paras[1]);
+	if (ct == 1)
+		cp = paras[0];
+	else
+		cp = paras[1];
 	if (ct != 1 && ct != 2)
 	{
 		ft_printf("Too many arguments--usage : cd path\n");
@@ -63,7 +78,7 @@ int			cd(char **paras, char ***env)
 	{
 		init_tempwd(tempwd, path);
 		if (ct == 1 || (ct == 2 && (!ft_strcmp(*(paras + 1), "~") || \
-		!ft_strcmp(*(paras + 1), "-"))))
+						!ft_strcmp(*(paras + 1), "-"))))
 			oldpwd_home(&cp, env, ct);
 		if (cp)
 			for_cd(cp, env, tempwd, path);

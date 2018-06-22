@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   helper.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saxiao <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/22 11:44:56 by saxiao            #+#    #+#             */
+/*   Updated: 2018/06/22 11:45:56 by saxiao           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <unistd.h>
 #include <stdlib.h>
 #include "libft/libft.h"
@@ -8,7 +20,7 @@ int		no_pipe(char *cmdline)
 	int		i;
 
 	i = 0;
-	while(*cmdline)
+	while (*cmdline)
 	{
 		if (*cmdline++ == '|')
 			i++;
@@ -58,19 +70,19 @@ void	child_pro(char **paras, char **env, t_sh *table)
 		update_lastapp(*paras, &env);
 		execve(*paras, paras, env);
 		ft_printf("permission denied for this program: %s\n", *paras);
-		exit(0) ;
+		exit(0);
 	}
 	path = path_in_sh(*paras, table);
 	if (!path)
 	{
 		ft_printf("%s : there is no such program\n", *paras);
-		exit(0) ;
+		exit(0);
 	}
 	else
 	{
 		update_lastapp(path, &env);
 		execve(path, paras, env);
 		ft_printf("permission denied for this program %s\n", *paras);
-		exit(0) ;
+		exit(0);
 	}
 }

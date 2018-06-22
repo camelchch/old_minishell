@@ -6,7 +6,7 @@
 /*   By: saxiao <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/01 17:40:08 by saxiao            #+#    #+#             */
-/*   Updated: 2017/12/01 17:46:44 by saxiao           ###   ########.fr       */
+/*   Updated: 2018/06/22 12:35:16 by saxiao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 #include <stdlib.h>
 #include "libft.h"
 
-char	*ft_strcdup(char *s, char c)
+static char			*ft_strcdup(char *s, char c)
 {
-	char *copy;
-	int	 i;
+	char	*copy;
+	int		i;
 
 	i = 0;
 	while (s[i] && s[i] != c)
@@ -31,12 +31,12 @@ char	*ft_strcdup(char *s, char c)
 	return (copy);
 }
 
-static st_list		*add(st_list *list, int fd)
+static t_stocklist	*add(t_stocklist *list, int fd)
 {
-	st_list		*temp;
-	st_list		*new;
+	t_stocklist		*temp;
+	t_stocklist		*new;
 
-	if (!(new = (st_list *)ft_memalloc(sizeof(st_list))))
+	if (!(new = (t_stocklist *)ft_memalloc(sizeof(t_stocklist))))
 		return (0);
 	new->fd = fd;
 	new->stock = ft_strdup("");
@@ -50,7 +50,7 @@ static st_list		*add(st_list *list, int fd)
 	return (list);
 }
 
-static	st_list		*find(st_list *list, int fd)
+static t_stocklist	*find(t_stocklist *list, int fd)
 {
 	char		buff[BUFF_SIZE + 1];
 	int			ret;
@@ -70,21 +70,20 @@ static	st_list		*find(st_list *list, int fd)
 		list->stock = ft_strjoin(list->stock, buff);
 		free(temp);
 		if (ft_strchr(buff, '\n'))
-			break;
+			break ;
 	}
 	return (list);
 }
 
-int		get_next_line(const int fd, char **line)
+int					get_next_line(const int fd, char **line)
 {
-	static	st_list		*list = NULL;
-	st_list		*begin;
-	char		*temp;
+	static t_stocklist	*list = NULL;
+	t_stocklist			*begin;
+	char				*temp;
 
-	if(fd < 0 || BUFF_SIZE < 1 || read(fd, "", 0))
+	if (fd < 0 || BUFF_SIZE < 1 || read(fd, "", 0))
 		return (-1);
-	if (!list)
-		list = add(list, fd);
+	list = !list ? add(list, fd) : list;
 	begin = list;
 	list = find(list, fd);
 	if (!(*(list->stock)))

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   build_in.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saxiao <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/22 11:42:16 by saxiao            #+#    #+#             */
+/*   Updated: 2018/06/22 11:43:35 by saxiao           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include <unistd.h>
 #include <stdlib.h>
@@ -60,5 +72,4 @@ void		do_build(char **paras, char ***env, t_sh *table)
 		put_env(*env, paras, table);
 	else if (!ft_strcmp(*paras, "exit"))
 		ft_exit();
-	//	ft_freestrstr(paras);
 }

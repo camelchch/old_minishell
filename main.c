@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: saxiao <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/31 12:19:33 by saxiao            #+#    #+#             */
-/*   Updated: 2018/06/04 17:03:27 by saxiao           ###   ########.fr       */
+/*   Created: 2018/06/22 11:44:10 by saxiao            #+#    #+#             */
+/*   Updated: 2018/06/22 11:44:33 by saxiao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,7 +19,7 @@
 
 void		put_strstr(char **str)
 {
-	while(*str)
+	while (*str)
 		ft_printf("%s\n", *str++);
 }
 

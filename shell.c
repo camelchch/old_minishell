@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shell.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saxiao <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/22 11:52:57 by saxiao            #+#    #+#             */
+/*   Updated: 2018/06/22 11:53:40 by saxiao           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include <unistd.h>
 #include <sys/types.h>
@@ -58,7 +70,7 @@ void		shell(char **env, t_sh *table)
 
 	line = NULL;
 	signal(SIGINT, signal_inh);
-	while(1)
+	while (1)
 	{
 		ft_printf("$> ");
 		if (get_next_line(1, &line) > 0)
