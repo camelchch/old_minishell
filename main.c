@@ -23,23 +23,37 @@ void		put_strstr(char **str)
 		ft_printf("%s\n", *str++);
 }
 
-static void	free_sh_table(t_sh *table, int index)
+void		free_sh_table(t_sh *table, int index)
 {
 	int			i;
 	t_table		*cp;
+	t_table		*temp;
 
 	i = 0;
 	while (i < index)
 	{
-		while (table[i].sh_ta)
+		if (table[i].sh_ta != NULL)
 		{
 			cp = table[i].sh_ta;
-			while (cp->next)
+			while (cp)
+			{
+				temp = cp;
 				cp = cp->next;
-			free(cp);
+				free(temp);
+				}
 		}
+		table[i].sh_ta = NULL;
 		i++;
 	}
+}
+
+static void	set_sh_null(t_sh *table, int index)
+{
+	int		i;
+
+	i = -1;
+	while (++i < index)
+		table[i].sh_ta = NULL;
 }
 
 static char	**copy_env(char **env)
@@ -71,10 +85,9 @@ int			main(int ac, char **av, char **env)
 	cp_env = copy_env(env);
 	update_shlvl(&cp_env);
 	all_path = path(cp_env);
+	set_sh_null(table, 100);
 	init_shtable(table, all_path);
-	shell(cp_env, table);
-	free_sh_table(table, 100);
-	ft_freestrstr(cp_env);
 	ft_freestrstr(all_path);
+	shell(cp_env, table);
 	return (0);
 }

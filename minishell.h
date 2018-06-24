@@ -57,6 +57,7 @@ void				pipes(char *cmdline, int nb_pipe, char ***env, t_sh *table);
 int					no_pipe(char *cmdline);
 int					nb_str(char **str);
 void				ft_freestrstr(char **str);
+void				free_sh_table(t_sh *table, int index);
 void				put_strstr(char **str);
 int					set_env(char **paras, char ***env);
 void				update_shlvl(char ***env);
