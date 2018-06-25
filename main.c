@@ -6,7 +6,7 @@
 /*   By: saxiao <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/22 11:44:10 by saxiao            #+#    #+#             */
-/*   Updated: 2018/06/22 11:44:33 by saxiao           ###   ########.fr       */
+/*   Updated: 2018/06/25 11:19:24 by saxiao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void		free_sh_table(t_sh *table, int index)
 				temp = cp;
 				cp = cp->next;
 				free(temp);
-				}
+			}
 		}
 		table[i].sh_ta = NULL;
 		i++;

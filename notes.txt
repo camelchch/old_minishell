@@ -1,5 +1,0 @@
-commnd 'test' print nothing and exit
-
-unsetenv HOME --> cd
-
-cd ~ (or any command with ~) when HOME isnt set

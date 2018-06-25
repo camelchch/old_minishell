@@ -6,7 +6,7 @@
 /*   By: saxiao <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/22 11:44:56 by saxiao            #+#    #+#             */
-/*   Updated: 2018/06/22 17:14:59 by saxiao           ###   ########.fr       */
+/*   Updated: 2018/06/25 11:34:42 by saxiao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		no_pipe(char *cmdline)
 	return (i);
 }
 
-void		replace_home(char *cp, char *home)
+void	replace_home(char *cp, char *home)
 {
 	int		i;
 	char	temp[PATH_MAX + 1];

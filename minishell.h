@@ -6,7 +6,7 @@
 /*   By: saxiao <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/31 12:26:55 by saxiao            #+#    #+#             */
-/*   Updated: 2018/06/22 16:59:07 by saxiao           ###   ########.fr       */
+/*   Updated: 2018/06/25 11:31:15 by saxiao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void				do_build(char **paras, char ***env, t_sh *table);
 void				put_env(char **env, char **paras, t_sh *table);
 char				*ft_getenv(char **env, char *name);
 void				init_shtable(t_sh *table, char **path);
+t_table				*malloc_add_sh(void);
 void				shell(char **env, t_sh *table);
 void				child_pro(char **paras, char **env, t_sh *table);
 void				pipes(char *cmdline, int nb_pipe, char ***env, t_sh *table);

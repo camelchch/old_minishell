@@ -6,7 +6,7 @@
 /*   By: saxiao <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/22 11:51:08 by saxiao            #+#    #+#             */
-/*   Updated: 2018/06/22 11:52:48 by saxiao           ###   ########.fr       */
+/*   Updated: 2018/06/25 11:35:36 by saxiao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static void		unset_sub_env(char **paras, char **env, char **new_env)
 	index = 0;
 	paras++;
 	while (*cp && !(!ft_strncmp(*paras, *cp, ft_strlen(*paras)) && \
-		ft_strlen(*paras) < ft_strlen(*cp) && (*cp)[ft_strlen(*paras)] == '='))
+				ft_strlen(*paras) < ft_strlen(*cp) &&\
+				(*cp)[ft_strlen(*paras)] == '='))
 		new_env[index++] = *cp++;
 	new_env[index] = NULL;
 	if (*cp)
@@ -60,7 +61,7 @@ static void		env_i(char **paras, char **new_env, char ***env, t_sh *table)
 		unset_sub_env(paras, *env, new_env);
 		paras = paras + 2;
 		*paras ? pipes(*paras, no_pipe(*paras), &new_env, table) : \
-		put_strstr((char **)new_env);
+			put_strstr((char **)new_env);
 	}
 	else
 		ft_printf("Usage: env [-u name] [-i] [name=value ...] [utlity]\n");
@@ -83,4 +84,15 @@ void			put_env(char **env, char **paras, t_sh *table)
 	else
 		pipes(*paras, no_pipe(*paras), &env, table);
 	free(new_env);
+}
+
+t_table			*malloc_add_sh(void)
+{
+	t_table		*add;
+
+	add = (t_table *)malloc(sizeof(t_table));
+	ft_bzero(add->name, NAME_MAX + 1);
+	ft_bzero(add->path, PATH_MAX + 1);
+	add->next = NULL;
+	return (add);
 }
